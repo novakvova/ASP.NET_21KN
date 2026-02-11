@@ -14,6 +14,7 @@
             <th scope="col">Фото</th>
             <th scope="col">ПІБ</th>
             <th scope="col">Телефон</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,12 @@
                 </td>
                 <td>@user.Name</td>
                 <td>@user.Phone</td>
+                <td>
+                    <a asp-action="Delete" class="btn btn-danger" 
+                        asp-route-id="@user.Id">
+                        Видалити
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

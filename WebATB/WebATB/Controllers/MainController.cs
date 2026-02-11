@@ -76,4 +76,21 @@ public class MainController : Controller
         list.Add(item);
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        //Шукаю елемента в списку по id
+        var item = list.SingleOrDefault(x => x.Id == id);
+        return View(item); 
+    }
+
+    [HttpPost]
+    public IActionResult Delete(UserItemModel user)
+    {
+        //Шукаю елемента в списку по id
+        var item = list.SingleOrDefault(x => x.Id == user.Id);
+        list.Remove(item);
+        return RedirectToAction(nameof(Index));
+    }
 }
