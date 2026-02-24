@@ -20,9 +20,18 @@
             <tr>
                 <th scope="row">1</th>
                 <td>
-                    <img src="@category.Image" 
-                        alt="Фото категорії" 
-                        style="width: 100px; height: auto;" /> 
+                    @if(category.Image.StartsWith("http"))
+                    {
+                        <img src="@category.Image" 
+                            alt="Фото категорії" 
+                            style="width: 100px; height: auto;" /> 
+                    }
+                    else
+                    {
+                        <img src="/images/@category.Image"
+                             alt="Фото категорії"
+                             style="width: 100px; height: auto;" />
+                    }
                 </td>
                 <td>@category.Name</td>
                 <td>@category.Slug</td>

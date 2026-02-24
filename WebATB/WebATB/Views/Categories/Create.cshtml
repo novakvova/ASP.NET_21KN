@@ -1,6 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model WebATB.Models.Categories.CategoryCreateViewModel
+
 <h1 class="text-center">Додати категорію</h1>
+
+<form asp-action="Create" 
+    class="col-md-6 offset-md-3" 
+    enctype="multipart/form-data">
+    
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label>"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Slug" class="form-label>"></label>
+        <input asp-for="Slug" class="form-control">
+        <span asp-validation-for="Slug" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FileImage" class="form-label>"></label>
+        <input asp-for="FileImage" class="form-control">
+        <span asp-validation-for="FileImage" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success">Створити</button>
+    </div>
+</form>
