@@ -36,12 +36,22 @@
                 <td>@category.Name</td>
                 <td>@category.Slug</td>
                 <td>
-                    <a asp-action="Delete" class="btn btn-danger" 
+                    <button type="button" 
+                        class="btn btn-primary" 
+                        onclick="document.getElementById('deleteCategoryId').value=this.dataset.id"
+                        data-id="@category.Id"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#deleteCategoryModal">
+                        Видалити
+                    </button>
+                    @* <a asp-action="Delete" class="btn btn-danger" 
                         asp-route-id="@category.Id">
                         Видалити
-                    </a>
+                    </a> *@
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@await Html.PartialAsync("_DeleteModal")

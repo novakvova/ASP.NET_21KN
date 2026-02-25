@@ -51,4 +51,17 @@ public class CategoriesController(MyContextATB myContextATB)
 
         return View(model); // Якщо модель не валідна, повертаємо її назад на форму для виправлення помилок
     }
+
+
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var category = myContextATB.Categories.Find(id); //Знаходимо категорію за id
+        if (category != null)
+        {
+            myContextATB.Categories.Remove(category); //Робимо SQL запит DELETE
+            myContextATB.SaveChanges(); //Зберігаємо зміни в БД - Викную SQL запит COMMIT
+        }
+        return RedirectToAction(nameof(Index));
+    }
 }
