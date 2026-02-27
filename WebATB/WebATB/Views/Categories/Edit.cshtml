@@ -1,0 +1,49 @@
+﻿@model WebATB.Models.Categories.CategoryEditViewModel
+
+<h1 class="text-center">Змінити категорію</h1>
+
+<form asp-action="Edit" 
+    class="col-md-6 offset-md-3" 
+    enctype="multipart/form-data">
+    
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label>"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Slug" class="form-label>"></label>
+        <input asp-for="Slug" class="form-control">
+        <span asp-validation-for="Slug" class="text-danger"></span>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-2">
+            @if(Model.OldImage.StartsWith("http"))
+            {
+                <img src="@Model.OldImage" 
+                    alt="Фото категорії" 
+                    style="width: 100px; height: auto;" /> 
+            }
+            else
+            {
+                <img src="/images/@Model.OldImage" 
+                    style="width: 100px; height: auto;" />
+            }
+        </div>
+        <div class="col-md-10">
+            <div class="mb-3">
+                <label asp-for="FileImage" class="form-label>"></label>
+                <input asp-for="FileImage" class="form-control">
+                <span asp-validation-for="FileImage" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success">Створити</button>
+    </div>
+</form>
