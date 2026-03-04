@@ -28,3 +28,21 @@
         <button type="submit" class="btn btn-success">Створити</button>
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        var txtName = document.getElementById("Name");
+        var txtSlug = document.getElementById("Slug");
+        // console.log("Slug", txtSlug);
+        // console.log(txtName.value);
+        //відлослюю коли значення і інпуті змінилося, тобто перейшли на інший інпут
+        txtName.onchange = function(e) {
+            console.log("change data", e.target.value);
+        }
+        //подія спрацьовує постійно
+        txtName.addEventListener("input", (e) => {
+            // console.log("input", e.target.value)
+            txtSlug.value = slugify(e.target.value);
+        });
+    </script>
+}
