@@ -77,7 +77,8 @@ public class CategoriesController(MyContextATB myContextATB)
         var category = myContextATB.Categories.Find(model.Id); //Знаходимо категорію за id
         if (ModelState.IsValid) //Зберігаємо категорію в БД, якщо модель валідна
         {
-            string fileName = "default.jpg";
+            //Зберігаємо старе фото
+            string fileName = category.Image;
             //Як зберегти фото
             if (model.FileImage != null)
             {
