@@ -14,4 +14,6 @@ public class CategoryEntity
     public string Slug { get; set; } = null!;
     [StringLength(255)]
     public string? Image { get; set; }
+
+    public virtual ICollection<ProductEntity> Products { get; set; } = null!;
 }
