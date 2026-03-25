@@ -1,0 +1,16 @@
+﻿@model WebATB.Models.Products.ProductCreateViewModel
+
+<h1 class="mt-2 text-center">Створення продукту</h1>
+
+<form asp-action="Create" 
+    class="col-md-6 offset-md-3" 
+    enctype="multipart/form-data">
+    
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label>"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+</form>
+
