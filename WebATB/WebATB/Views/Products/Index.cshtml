@@ -1,4 +1,58 @@
-﻿
-<h1 class="text-center">Список продуктів</h1>
+﻿@model IList<WebATB.Models.Products.ProductViewModel>
 
-<a asp-action="Create" class="btn btn-success">Додати</a>
+<a asp-action="Create" class="btn btn-success mt-4">Додати</a>
+
+<div class="container container-main">
+    <h1>Список продуктів</h1>
+ 
+    <div class="row g-4">
+        @foreach(var p in Model)
+        {
+            <!-- Карточка 1: Мандарини -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <button class="heart-btn">♡</button>
+                        <img src="/images/@p.Image" alt="Мандарини" class="product-image">
+                    </div>
+                    <div class="product-body">
+                        <h5 class="product-name">@p.Name</h5>
+                        <div class="product-footer">
+                            <div class="price-info">
+                                <div class="price-current">@p.Price <span class="price-unit">грн/кг</span></div>
+                            </div>
+                            <button class="add-to-cart-btn">🛒</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+  
+        <!-- Карточка 3: Морська капуста з розумним вибором -->
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <button class="heart-btn">♡</button>
+                    <div class="discount-badge">-44%</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%2327AE60'/%3E%3Ctext x='50%' y='50%' text-anchor='middle' dy='.3em' fill='white' font-size='24'%3EMorська капуста%3C/text%3E%3C/svg%3E"
+                         alt="Морська капуста" class="product-image">
+                </div>
+                <div class="product-body">
+                    <h5 class="product-name">Морська капуста 0,5 кг Розумний вибір</h5>
+                    <div class="product-price-section">
+                        <div class="price-original">68.90</div>
+                        <div class="price-current">37.90 <span class="price-unit">грн/шт</span></div>
+                    </div>
+                    <div class="product-footer">
+                        <div class="price-info">
+                            <span class="price-badge">36.00</span>
+                        </div>
+                        <button class="add-to-cart-btn">🛒</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

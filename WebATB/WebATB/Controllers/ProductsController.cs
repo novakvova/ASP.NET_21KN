@@ -9,7 +9,17 @@ public class ProductsController(MyContextATB myContextATB) : Controller
 {
     public IActionResult Index()
     {
-        return View();
+        var products = myContextATB.Products.Select(p => new ProductViewModel
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Slug = p.Slug,
+            Price = p.Price.ToString(),
+            CategoryName = p.Category.Name,
+            Image = p.Image
+        }).ToList();
+
+        return View(products);
     }
 
     [HttpGet] // Це сторінка для відображення створення категорії
