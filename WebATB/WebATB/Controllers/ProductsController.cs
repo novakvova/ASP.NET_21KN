@@ -1,15 +1,62 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebATB.Data;
+using WebATB.Data.Entities;
+using WebATB.Models.Products;
 
 namespace WebATB.Controllers;
 
-public class ProductsController : Controller
+public class ProductsController(MyContextATB myContextATB) : Controller
 {
     public IActionResult Index()
     {
         return View();
     }
+
+    [HttpGet] // Це сторінка для відображення створення категорії
     public IActionResult Create()
     {
-        return View();
+        ProductCreateViewModel model = new ProductCreateViewModel();
+        //Динамічна колекція у ASP.NET MVC
+        //Тут буде список наших категорій
+        ViewBag.Categories = myContextATB.Categories.ToList();
+
+        return View(model);
+    }
+
+
+    [HttpPost]
+    public IActionResult Create(ProductCreateViewModel model)
+    {
+        if (ModelState.IsValid) //Зберігаємо категорію в БД, якщо модель валідна
+        {
+            string fileName = "default.jpg";
+            //Як зберегти фото
+            if (model.FileImage != null)
+            {
+                var dir = Directory.GetCurrentDirectory();
+                var wwwroot = "wwwroot";
+                fileName = Guid.NewGuid().ToString()+".jpg";
+                var savePath = Path.Combine(dir, wwwroot, "images", fileName);
+                using (var stream = new FileStream(savePath, FileMode.Create))
+                {
+                    model.FileImage.CopyTo(stream);
+                }
+            }
+            //Заповнюю таблицю категорій в БД
+            var product = new ProductEntity
+            {
+                Name = model.Name,
+                Slug = model.Slug,
+                Price = decimal.Parse(model.Price),
+                Description = model.Description,
+                GeneralInfo = model.GeneralInfo,
+                CategoryId = model.CategoryId,
+                Image = fileName
+            };
+            myContextATB.Products.Add(product); //Роблю SQL запит INSERT
+            myContextATB.SaveChanges(); //Зберігаю зміни в БД - Викную SQL запит COMMIT
+            return RedirectToAction(nameof(Index));
+        }
+        return View(model); // Якщо модель не валідна, повертаємо її назад на форму для виправлення помилок
     }
 }
