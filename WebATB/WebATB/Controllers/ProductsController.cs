@@ -95,4 +95,41 @@ public class ProductsController(MyContextATB myContextATB) : Controller
         ViewBag.Categories = myContextATB.Categories.ToList();
         return View(model);
     }
+
+    [HttpPost]
+    public IActionResult Edit(ProductEditViewModel model)
+    {
+        var product = myContextATB.Products.Find(model.Id); //Знаходимо категорію за id
+        if (ModelState.IsValid) //Зберігаємо категорію в БД, якщо модель валідна
+        {
+            //Зберігаємо старе фото
+            string fileName = product.Image;
+            //Як зберегти фото
+            if (model.FileImage != null)
+            {
+                var dir = Directory.GetCurrentDirectory();
+                var wwwroot = "wwwroot";
+                fileName = Guid.NewGuid().ToString()+".jpg";
+                var savePath = Path.Combine(dir, wwwroot, "images", fileName);
+                using (var stream = new FileStream(savePath, FileMode.Create))
+                {
+                    model.FileImage.CopyTo(stream);
+                }
+            }
+            //Заповнюю таблицю категорій в БД
+            product.Name = model.Name;
+            product.Image = fileName;
+            product.Slug = model.Slug;
+            product.CategoryId = model.CategoryId;
+            product.GeneralInfo = model.GeneralInfo;
+            product.Price = decimal.Parse(model.Price);
+
+
+            myContextATB.SaveChanges(); //Зберігаю зміни в БД - Викную SQL запит COMMIT
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(model); // Якщо модель не валідна, повертаємо її назад на форму для виправлення помилок
+    }
+
 }
