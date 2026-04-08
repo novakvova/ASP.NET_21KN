@@ -1,0 +1,98 @@
+﻿@model WebATB.Models.Products.ProductEditViewModel
+
+@{
+    var categories = ViewBag.Categories;
+}
+
+<h1 class="mt-2 text-center">Зміна продукту</h1>
+
+<form asp-action="Edit"
+      class="col-md-6 offset-md-3"
+      enctype="multipart/form-data">
+    
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label>"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label>"></label>
+        <select asp-for="CategoryId" class="form-select">
+            @foreach (var cat in categories)
+            {
+                <option value="@cat.Id">@cat.Name</option>
+            }
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Slug" class="form-label>"></label>
+        <input asp-for="Slug" class="form-control">
+        <span asp-validation-for="Slug" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label>"></label>
+        <input asp-for="Price" class="form-control">
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label>"></label>
+        <textarea asp-for="Description" rows="4" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GeneralInfo" class="form-label>"></label>
+        <textarea asp-for="GeneralInfo" rows="4" class="form-control"></textarea>
+        <span asp-validation-for="GeneralInfo" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @if (Model.OldImage.StartsWith("http"))
+            {
+                <img src="@Model.OldImage"
+                     alt="Фото категорії"
+                     style="width: 100px; height: auto;" />
+            }
+            else
+            {
+                <img src="/images/@Model.OldImage"
+                     style="width: 100px; height: auto;" />
+            }
+        </div>
+        <div class="col-md-10">
+            <div class="mb-3">
+                <label asp-for="FileImage" class="form-label>"></label>
+                <input asp-for="FileImage" class="form-control">
+                <span asp-validation-for="FileImage" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success">Зберегти</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        var txtName = document.getElementById("Name");
+        var txtSlug = document.getElementById("Slug");
+        // console.log("Slug", txtSlug);
+        // console.log(txtName.value);
+        //відлослюю коли значення і інпуті змінилося, тобто перейшли на інший інпут
+        txtName.onchange = function(e) {
+            console.log("change data", e.target.value);
+        }
+        //подія спрацьовує постійно
+        txtName.addEventListener("input", (e) => {
+            // console.log("input", e.target.value)
+            txtSlug.value = slugify(e.target.value);
+        });
+    </script>
+}

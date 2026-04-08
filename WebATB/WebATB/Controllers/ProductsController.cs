@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebATB.Data;
 using WebATB.Data.Entities;
+using WebATB.Models.Categories;
 using WebATB.Models.Products;
 
 namespace WebATB.Controllers;
@@ -68,5 +69,30 @@ public class ProductsController(MyContextATB myContextATB) : Controller
             return RedirectToAction(nameof(Index));
         }
         return View(model); // Якщо модель не валідна, повертаємо її назад на форму для виправлення помилок
+    }
+
+    [HttpGet] //id - це параметр, який ми передаємо в URL, наприклад: /Product/Edit/5
+    public IActionResult Edit(int id)
+    {
+        var prod = myContextATB.Products.FirstOrDefault(c => c.Id == id);
+        if (prod == null)
+        {
+            return NotFound(); //Якщо продукта не знайдена, повертаємо 404 помилку
+        }
+        var model = new ProductEditViewModel
+        {
+            Id = prod.Id,
+            Name = prod.Name,
+            Slug = prod.Slug,
+            CategoryId=prod.CategoryId,
+            Description = prod.Description,
+            GeneralInfo = prod.GeneralInfo,
+            Price = prod.Price.ToString(),
+            OldImage = prod.Image
+        };
+        //Динамічна колекція у ASP.NET MVC
+        //Тут буде список наших категорій
+        ViewBag.Categories = myContextATB.Categories.ToList();
+        return View(model);
     }
 }
