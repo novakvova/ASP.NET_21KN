@@ -56,3 +56,22 @@
     </div>
 </div>
 
+<script>
+    // Функціональність для кнопки "подобається"
+    document.querySelectorAll('.heart-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.toggle('active');
+            this.textContent = this.classList.contains('active') ? '♥' : '♡';
+        });
+    });
+ 
+    // Функціональність для кнопки "до кошика"
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productName = this.closest('.product-card').querySelector('.product-name').textContent;
+            alert(`"${productName}" додано до кошика!`);
+        });
+    });
+</script>
+
