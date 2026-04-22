@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebATB.Models.Account;
 
 namespace WebATB.Controllers
 {
@@ -6,6 +7,12 @@ namespace WebATB.Controllers
     {
         [HttpGet] //Реєстрація нового користувача
         public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost] //Реєстрація нового користувача
+        public IActionResult Register(RegisterViewModel model)
         {
             return View();
         }
