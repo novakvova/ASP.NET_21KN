@@ -59,5 +59,34 @@ namespace WebATB.Controllers
             }
             return View(model); // Якщо модель не валідна, повертаємо її назад на форму для виправлення помилок
         }
+
+        [HttpGet] //Вхід нового користувача
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost] //Вхід нового користувача
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid) //Зберігаємо категорію в БД, якщо модель валідна
+            {
+                //Шукаємо користувача по email
+                var user = await userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    //пошук користувача по паролю
+                    var res = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+                    if (res.Succeeded)
+                    {
+                        await signInManager.SignInAsync(user, false); // залогінюємо користувача
+                        return Redirect("/");
+                    }
+                }
+                ModelState.AddModelError("", "Користувач з таким email не знайдений");
+            }
+            return View(model); // Якщо модель не валідна, повертаємо її назад на форму для виправлення помилок
+        }
+
     }
 }
