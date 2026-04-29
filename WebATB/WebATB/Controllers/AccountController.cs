@@ -88,5 +88,11 @@ namespace WebATB.Controllers
             return View(model); // Якщо модель не валідна, повертаємо її назад на форму для виправлення помилок
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return Redirect("/");
+        }
     }
 }
